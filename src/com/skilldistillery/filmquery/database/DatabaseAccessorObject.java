@@ -47,13 +47,12 @@ static { // driver access
     
   }
   public List<Film> findFilmBySearchString(String searchString) throws SQLException {
-		String SQL = "select actor_id, actor.first_name, actor.last_name, film.title, film.id, film.release_year, film.rating, film.description, film.length, language.name from film_actor join actor on film_actor.actor_id = actor.id join film on film_actor.film_id = film.id join language on film.language_id = language.id where film.title like '%" + searchString + "%' or description like '%" + searchString + "%'";
+		String SQL = "select film.id, film.title, film.release_year, film.rating, film.description, language.name, film.length from film join language on film.language_id = language.id where film.title like '%" + searchString + "%' or film.description like '%" + searchString + "%'";
 		ResultSet result = databaseAccess(SQL);
 		List<Actor> actorList = new ArrayList<>();  // placed for long term goal
 	    List<Film> searchList = new ArrayList<>();
  		
-	    if (result.next() == false) 
-	    	System.out.println("No such key word exists.");
+	  	
 	    while (result.next()) {
 	    		Film film = new Film(result.getInt("id"), 
 							result.getString("title"), 
@@ -65,8 +64,8 @@ static { // driver access
 							actorList);
 	    		searchList.add(film);
 	    		}   
-	    return searchList;
-	    
+	  
+	    return searchList;  
 }
 
   

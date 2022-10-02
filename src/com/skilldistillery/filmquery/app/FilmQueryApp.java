@@ -25,6 +25,7 @@ public class FilmQueryApp {
 
 		input.close();
 	}
+
 	private void printMenu() {
 		System.out.println("Welcome to our last use of Scanner\n");
 		System.out.println("Please selet from an option below: ");
@@ -33,9 +34,12 @@ public class FilmQueryApp {
 		System.out.println("3. Exit the application");
 
 	}
+
 	private void startUserInterface(Scanner input) throws SQLException {
-		printMenu();
-		int optionNumber = input.nextInt();
+		boolean exitFlag = true;
+		while (exitFlag) {
+			printMenu();
+			int optionNumber = input.nextInt();
 			switch (optionNumber) {
 			case 1:
 				System.out.println("Please enter a film number ID to look up: ");
@@ -45,17 +49,26 @@ public class FilmQueryApp {
 			case 2:
 				System.out.println("Please enter a keyword to search for in the film titles");
 				String keyWord = input.next();
-				for (Film f : db.findFilmBySearchString(keyWord)) {
-					if (f.equals(null)) System.out.println("Your search: " + keyWord + " was not found");
-					System.out.println(f);
-					
-				}
+				int counter = 0;
+
+				if (!db.findFilmBySearchString(keyWord).isEmpty()) {
+					for (Film f : db.findFilmBySearchString(keyWord)) {
+						System.out.println(f);
+						counter++;
+					}
+					System.out.println(counter + " instances of " + keyWord + " found.");
+
+				} else
+					System.out.println("Nothing found.");
+				break;
 			case 3:
+				System.out.println("Goodbye.");
+				exitFlag = false;
 				break;
 			default:
 				System.out.println("Error");
 			}
-		
+		}
 	}
 
 }
