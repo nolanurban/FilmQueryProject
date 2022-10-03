@@ -53,7 +53,7 @@ static { // driver access
 		String SQL = "select actor_id, actor.first_name, actor.last_name, film.title, film.id, film.release_year, film.rating, film.description, film.length, language.name from film_actor join actor on film_actor.actor_id = actor.id join film on film_actor.film_id = film.id join language on film.language_id = language.id where film.title like '%" + searchString + "%' or film.description like '%" + searchString + "%'";		
 		ResultSet result = databaseAccess(SQL);
 	    List<Film> searchList = new ArrayList<>();
- 		result.next();	  	
+ 		if (result.next())	  	
 	    do {
 	    		Film film = new Film(result.getInt("id"), 
 							result.getString("title"), 
@@ -83,6 +83,7 @@ static { // driver access
 	    		searchList.add(film); // now we add our film obj into our film list
 	    		
 	    } while (true);  
+ 		else return searchList;	
 }
 
   

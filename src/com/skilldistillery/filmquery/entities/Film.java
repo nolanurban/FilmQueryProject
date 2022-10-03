@@ -38,7 +38,7 @@ public class Film {
 			allActors += actor.getFirstName() + " " + actor.getLastName() + ", ";
  		}
 		
-		return "Title: " + title + "\nYear: " + releaseYear + "\nRating: " + rating + "\nDescription: " + description + "\nActors: " + allActors.substring(0, allActors.length()-2);
+		return "Title: " + title + "\nYear: " + releaseYear + "\nRating: " + rating + "\nLanguage: " + language + "\nDescription: " + description + "\nActors: " + allActors.substring(0, allActors.length()-2);
 	}
 
 	public String getLanguage() {
