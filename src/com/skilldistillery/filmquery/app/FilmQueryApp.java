@@ -27,11 +27,11 @@ public class FilmQueryApp {
 	}
 
 	private void printMenu() {
-		System.out.println("Welcome to our last use of Scanner\n");
+		System.out.println("\nWelcome to our last use of Scanner\n");
 		System.out.println("Please selet from an option below: ");
 		System.out.println("1. Look up a film by it's ID number");
 		System.out.println("2. Look up a film by searching a keyword");
-		System.out.println("3. Exit the application");
+		System.out.println("3. Exit the application\n");
 
 	}
 

@@ -1,5 +1,6 @@
 package com.skilldistillery.filmquery.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Film {
@@ -16,7 +17,7 @@ public class Film {
 	
 	
 	public Film(int id, String title, int releaseYear, String rating, String description, String language,
-			int lengthOfMovie, List<Actor> actors) {
+			int lengthOfMovie) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -25,12 +26,19 @@ public class Film {
 		this.description = description;
 		this.language = language;
 		this.lengthOfMovie = lengthOfMovie;
-		this.actors = actors;
+		actors = new ArrayList<Actor>();
+		
 	}
             
 	@Override
 	public String toString() {
-		return "Title: " + title + "\nYear: " + releaseYear + "\nRating: " + rating + "\n" + "Description: " + description;
+		String allActors = "";
+		
+		for (Actor actor: actors) { // iterate through all of our actors
+			allActors += actor.getFirstName() + " " + actor.getLastName() + ", ";
+ 		}
+		
+		return "Title: " + title + "\nYear: " + releaseYear + "\nRating: " + rating + "\nDescription: " + description + "\nActors: " + allActors.substring(0, allActors.length()-2);
 	}
 
 	public String getLanguage() {
