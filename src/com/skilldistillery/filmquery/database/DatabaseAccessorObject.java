@@ -13,7 +13,10 @@ import com.skilldistillery.filmquery.entities.Film;
 
 public class DatabaseAccessorObject implements DatabaseAccessor {
 
-private static String URL = "jdbc:mysql://localhost:3306/sdvid";
+private static String 	URL = "jdbc:mysql://localhost:3306/sdvid";
+Connection 				conn;
+PreparedStatement 		stmt;
+ResultSet 				result;
 
 static { // driver access
 		try {
@@ -45,7 +48,8 @@ static { // driver access
 		    }   
 		    
 		    film.setActors(actorList); // store our actors in our film object
-    return film;
+		    closeConnections();
+		    return film;
     
   }
   
@@ -74,6 +78,7 @@ static { // driver access
 	    			if (!result.next()) {  
 	    				film.setActors(actorList); // we have to set it here because it will skip one entry without
 	    				searchList.add(film);
+	    				closeConnections();
 	    				return searchList;
 	    				}
 	    			} while (filmId == result.getInt("id")); // are we on the same film still
@@ -81,22 +86,28 @@ static { // driver access
 //	    		result.previous(); // if we aren't on the same film, we need to step back one in the iteration.
 	    		film.setActors(actorList); // take our actor list and apply it to our film object
 	    		searchList.add(film); // now we add our film obj into our film list
-	    		
 	    } while (true);  
- 		else return searchList;	
+ 		else {
+ 			closeConnections();
+ 			return searchList;	
+ 		}
+ 		
+ 		
 }
-
+private void closeConnections() throws SQLException {
+	result.close();
+	stmt.close();
+	conn.close();
+}
   
 public ResultSet databaseAccess(String input) throws SQLException {
 		String user = "student";
 		String pass = "student";
-	
-		Connection conn = DriverManager.getConnection(URL, user, pass);
-		PreparedStatement stmt = conn.prepareStatement(input);
-		ResultSet result = stmt.executeQuery();
-		
-		return result;
-		
+		conn = DriverManager.getConnection(URL, user, pass);
+		stmt = conn.prepareStatement(input);
+		result = stmt.executeQuery();
+
+		return result;		
 	}
 
 }
